@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Support Portal</title>
+    <style>
+        body {
+            background-image: url('images/background.jpeg');
+            background-size: cover;
+	    background-repeat: no-repeat;	    
+	    background-position: center center; 	    
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+        }
+        .header img {
+            max-width: 100px;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            background-color: #f8f8f8;
+            padding: 10px;
+        }
+        .nav button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .nav button:hover {
+            background-color: #0056b3;
+        }
+        .status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .chat-widget {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="logos/logo.png" alt="Pathway Communications">
+        <h1>Customer Support Portal</h1>
+    </div>
+    <div class="nav">
+        <button onclick="window.open('https://www.pathcom.com', '_blank')">Website</button>
+        <button onclick="window.open('https://docs.pathcom.com/', '_blank')">Help</button>
+    </div>
+    <div class="status">
+        <p id="datetime"></p>
+        <p id="ipaddress"></p>
+    </div>
+    <div class="chat-widget">
+        <!-- Web chat widget can be added here -->
+
+
+    </div>
+    <script> window.chtlConfig = { chatbotId: "5313223727" } </script>
+    <script async data-id="5313223727" id="chatling-embed-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+
+    <script>
+        // Display current date and time
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('datetime').innerText = now.toLocaleString();
+        }
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+        // Fetch and display public IP address
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ipaddress').innerText = 'IP Address: ' + data.ip;
+            });
+    </script>
+</body>
+</html>
