@@ -196,11 +196,17 @@
 
       // New Chat button logic
       newChatBtn.addEventListener('click', () => {
-        // End current DirectLine conversation and start a new one
+        // Dispose previous DirectLine connection if possible
+        if (directLine && typeof directLine.end === 'function') {
+          directLine.end();
+        }
+        // Clear the webchat container
+        const webchatDiv = document.getElementById('webchat');
+        webchatDiv.innerHTML = '';
+        // Create new DirectLine and re-render
         directLine = window.WebChat.createDirectLine({
           token: 'vZYGCepDatph50zzgbA6DwhBajVcM5eERhE7ipMMg8kfICerl16XJQQJ99BFAC77bzfAArohAAABAZBSY6eO.8a3iFiFRKWT3brc6nPSViMgw7epacvzRM4SdJ6nkwSUEw9SRkhY8JQQJ99BFAC77bzfAArohAAABAZBSJGCe'
         });
-        document.getElementById('webchat').innerHTML = '';
         renderWebChat();
       });
 
