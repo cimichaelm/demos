@@ -133,6 +133,9 @@
       <div id="webchat" role="main"></div>
       <div class="chat-footer">
         <i class="fa-solid fa-shield-halved"></i> Your conversation is private and secure.
+        <button id="newChatBtn" style="margin-left:16px; background:#4f8cff; color:#fff; border:none; border-radius:8px; padding:6px 16px; cursor:pointer;">
+          <i class="fa-solid fa-comments"></i> New Chat
+        </button>
       </div>
     </div>
     <button class="chat-button" id="chatButton" title="Chat">
@@ -140,41 +143,46 @@
     </button>
     <script>
       // Web Chat initialization
-      const directLine = window.WebChat.createDirectLine({
+      let directLine = window.WebChat.createDirectLine({
         token: 'vZYGCepDatph50zzgbA6DwhBajVcM5eERhE7ipMMg8kfICerl16XJQQJ99BFAC77bzfAArohAAABAZBSY6eO.8a3iFiFRKWT3brc6nPSViMgw7epacvzRM4SdJ6nkwSUEw9SRkhY8JQQJ99BFAC77bzfAArohAAABAZBSJGCe'
       });
 
-      window.WebChat.renderWebChat({
-        directLine: directLine,
-        styleOptions: {
-          botAvatarInitials: '🤖',
-          userAvatarInitials: '🧑',
-          botAvatarBackgroundColor: '#4f8cff',
-          userAvatarBackgroundColor: '#38e8ff',
-          bubbleBackground: '#e3f0fc',
-          bubbleFromUserBackground: '#d1ffe7',
-          bubbleBorderRadius: 16,
-          bubbleFromUserBorderRadius: 16,
-          bubbleTextColor: '#222',
-          bubbleFromUserTextColor: '#222',
-          backgroundColor: 'transparent',
-          hideUploadButton: false,
-          sendBoxBackground: '#f7fafd',
-          sendBoxButtonColor: '#4f8cff',
-          sendBoxTextColor: '#222',
-          sendBoxBorderTop: '1px solid #e3e7ee',
-          suggestedActionBackground: '#4f8cff',
-          suggestedActionTextColor: '#fff',
-          suggestedActionBorder: 'none',
-          suggestedActionBorderRadius: 16,
-          suggestedActionLayout: 'stacked'
-        }
-      }, document.getElementById('webchat'));
+      function renderWebChat() {
+        window.WebChat.renderWebChat({
+          directLine: directLine,
+          styleOptions: {
+            botAvatarInitials: '🤖',
+            userAvatarInitials: '🧑',
+            botAvatarBackgroundColor: '#4f8cff',
+            userAvatarBackgroundColor: '#38e8ff',
+            bubbleBackground: '#e3f0fc',
+            bubbleFromUserBackground: '#d1ffe7',
+            bubbleBorderRadius: 16,
+            bubbleFromUserBorderRadius: 16,
+            bubbleTextColor: '#222',
+            bubbleFromUserTextColor: '#222',
+            backgroundColor: 'transparent',
+            hideUploadButton: false,
+            sendBoxBackground: '#f7fafd',
+            sendBoxButtonColor: '#4f8cff',
+            sendBoxTextColor: '#222',
+            sendBoxBorderTop: '1px solid #e3e7ee',
+            suggestedActionBackground: '#4f8cff',
+            suggestedActionTextColor: '#fff',
+            suggestedActionBorder: 'none',
+            suggestedActionBorderRadius: 16,
+            suggestedActionLayout: 'stacked'
+          }
+        }, document.getElementById('webchat'));
+      }
+
+      renderWebChat();
 
       // Minimize/maximize logic
       const chatContainer = document.getElementById('chatContainer');
       const chatButton = document.getElementById('chatButton');
       const minimizeBtn = document.getElementById('minimizeBtn');
+      const newChatBtn = document.getElementById('newChatBtn');
 
       chatButton.addEventListener('click', () => {
         chatContainer.classList.remove('minimized');
@@ -184,6 +192,16 @@
       minimizeBtn.addEventListener('click', () => {
         chatContainer.classList.add('minimized');
         chatButton.style.display = 'flex';
+      });
+
+      // New Chat button logic
+      newChatBtn.addEventListener('click', () => {
+        // End current DirectLine conversation and start a new one
+        directLine = window.WebChat.createDirectLine({
+          token: 'vZYGCepDatph50zzgbA6DwhBajVcM5eERhE7ipMMg8kfICerl16XJQQJ99BFAC77bzfAArohAAABAZBSY6eO.8a3iFiFRKWT3brc6nPSViMgw7epacvzRM4SdJ6nkwSUEw9SRkhY8JQQJ99BFAC77bzfAArohAAABAZBSJGCe'
+        });
+        document.getElementById('webchat').innerHTML = '';
+        renderWebChat();
       });
 
       // Optionally, open chat on page load (remove 'minimized' class below to show by default)
