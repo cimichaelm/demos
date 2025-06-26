@@ -196,18 +196,17 @@
 
       // New Chat button logic
       newChatBtn.addEventListener('click', () => {
-        // Dispose previous DirectLine connection if possible
         if (directLine && typeof directLine.end === 'function') {
           directLine.end();
         }
-        // Clear the webchat container
         const webchatDiv = document.getElementById('webchat');
         webchatDiv.innerHTML = '';
-        // Create new DirectLine and re-render
-        directLine = window.WebChat.createDirectLine({
-          token: 'vZYGCepDatph50zzgbA6DwhBajVcM5eERhE7ipMMg8kfICerl16XJQQJ99BFAC77bzfAArohAAABAZBSY6eO.8a3iFiFRKWT3brc6nPSViMgw7epacvzRM4SdJ6nkwSUEw9SRkhY8JQQJ99BFAC77bzfAArohAAABAZBSJGCe'
-        });
-        renderWebChat();
+        setTimeout(() => {
+          directLine = window.WebChat.createDirectLine({
+            token: 'vZYGCepDatph50zzgbA6DwhBajVcM5eERhE7ipMMg8kfICerl16XJQQJ99BFAC77bzfAArohAAABAZBSY6eO.8a3iFiFRKWT3brc6nPSViMgw7epacvzRM4SdJ6nkwSUEw9SRkhY8JQQJ99BFAC77bzfAArohAAABAZBSJGCe'
+          });
+          renderWebChat();
+        }, 100);
       });
 
       // Optionally, open chat on page load (remove 'minimized' class below to show by default)
