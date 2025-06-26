@@ -12,9 +12,6 @@
         font-family: 'Segoe UI', Arial, sans-serif;
         margin: 0;
         min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
       }
       .chat-container {
         background: #fff;
@@ -28,6 +25,14 @@
         flex-direction: column;
         overflow: hidden;
         border: 1px solid #e3e7ee;
+        position: fixed;
+        bottom: 90px;
+        right: 32px;
+        z-index: 1001;
+        transition: box-shadow 0.2s;
+      }
+      .chat-container.minimized {
+        display: none;
       }
       .chat-header {
         background: linear-gradient(90deg, #4f8cff 0%, #38e8ff 100%);
@@ -38,12 +43,26 @@
         text-align: center;
         letter-spacing: 1px;
         position: relative;
-        
       }
       .chat-header .fa-robot {
         margin-right: 10px;
         font-size: 1.5rem;
         vertical-align: middle;
+      }
+      .chat-header .minimize-btn {
+        position: absolute;
+        right: 18px;
+        top: 18px;
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1.3rem;
+        cursor: pointer;
+        outline: none;
+        transition: color 0.2s;
+      }
+      .chat-header .minimize-btn:hover {
+        color: #222;
       }
       #webchat {
         flex: 1;
@@ -60,31 +79,67 @@
         color: #7a8ca3;
         border-top: 1px solid #e3e7ee;
       }
+      .chat-button {
+        position: fixed;
+        bottom: 32px;
+        right: 32px;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4f8cff 0%, #38e8ff 100%);
+        box-shadow: 0 4px 16px rgba(60, 60, 120, 0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 2.2rem;
+        border: none;
+        cursor: pointer;
+        z-index: 1002;
+        transition: background 0.2s;
+      }
+      .chat-button:hover {
+        background: linear-gradient(135deg, #38e8ff 0%, #4f8cff 100%);
+      }
       @media (max-width: 500px) {
         .chat-container {
           width: 100vw;
           min-height: 100vh;
           border-radius: 0;
+          right: 0;
+          bottom: 0;
         }
         .chat-header {
           font-size: 1.2rem;
           padding: 18px 0 10px 0;
         }
+        .chat-button {
+          right: 16px;
+          bottom: 16px;
+          width: 56px;
+          height: 56px;
+          font-size: 1.7rem;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="chat-container">
+    <div class="chat-container minimized" id="chatContainer">
       <div class="chat-header">
-      <span style="display:inline-block; width:48px; height:48px; vertical-align:middle; background: url('https://netpulse-services.pathcom.com/wp-content/themes/netpulse/images/pathcom-logo.png') no-repeat center/contain; margin-right:10px;"></span>
+        <span style="display:inline-block; width:48px; height:48px; vertical-align:middle; background: url('https://netpulse-services.pathcom.com/wp-content/themes/netpulse/images/pathcom-logo.png') no-repeat center/contain; margin-right:10px;"></span>
         Chat with our Bot
+        <button class="minimize-btn" id="minimizeBtn" title="Minimize"><i class="fa-solid fa-minus"></i></button>
       </div>
       <div id="webchat" role="main"></div>
       <div class="chat-footer">
         <i class="fa-solid fa-shield-halved"></i> Your conversation is private and secure.
       </div>
     </div>
+    <button class="chat-button" id="chatButton" title="Chat">
+      <i class="fa-solid fa-robot"></i>
+    </button>
     <script>
+      // Web Chat initialization
       const directLine = window.WebChat.createDirectLine({
         token: 'vZYGCepDatph50zzgbA6DwhBajVcM5eERhE7ipMMg8kfICerl16XJQQJ99BFAC77bzfAArohAAABAZBSY6eO.8a3iFiFRKWT3brc6nPSViMgw7epacvzRM4SdJ6nkwSUEw9SRkhY8JQQJ99BFAC77bzfAArohAAABAZBSJGCe'
       });
@@ -113,9 +168,27 @@
           suggestedActionBorder: 'none',
           suggestedActionBorderRadius: 16,
           suggestedActionLayout: 'stacked'
-          
         }
       }, document.getElementById('webchat'));
+
+      // Minimize/maximize logic
+      const chatContainer = document.getElementById('chatContainer');
+      const chatButton = document.getElementById('chatButton');
+      const minimizeBtn = document.getElementById('minimizeBtn');
+
+      chatButton.addEventListener('click', () => {
+        chatContainer.classList.remove('minimized');
+        chatButton.style.display = 'none';
+      });
+
+      minimizeBtn.addEventListener('click', () => {
+        chatContainer.classList.add('minimized');
+        chatButton.style.display = 'flex';
+      });
+
+      // Optionally, open chat on page load (remove 'minimized' class below to show by default)
+      // chatContainer.classList.remove('minimized');
+      // chatButton.style.display = 'none';
     </script>
   </body>
 </html>
