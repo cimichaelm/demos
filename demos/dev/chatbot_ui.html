@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chatbot UI</title>
+    <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Segoe+UI:400,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+    <style>
+      body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .chat-container {
+        background: #fff;
+        border-radius: 24px;
+        box-shadow: 0 8px 32px rgba(60, 60, 120, 0.18);
+        padding: 0;
+        width: 420px;
+        max-width: 98vw;
+        min-height: 650px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid #e3e7ee;
+      }
+      .chat-header {
+        background: linear-gradient(90deg, #4f8cff 0%, #38e8ff 100%);
+        color: #fff;
+        font-size: 1.7rem;
+        font-weight: 600;
+        padding: 28px 0 18px 0;
+        text-align: center;
+        letter-spacing: 1px;
+        position: relative;
+        
+      }
+      .chat-header .fa-robot {
+        margin-right: 10px;
+        font-size: 1.5rem;
+        vertical-align: middle;
+      }
+      #webchat {
+        flex: 1;
+        min-height: 500px;
+        height: 500px;
+        background: #f7fafd;
+        padding: 0 0 8px 0;
+      }
+      .chat-footer {
+        background: #f7fafd;
+        padding: 12px 20px;
+        text-align: right;
+        font-size: 0.95rem;
+        color: #7a8ca3;
+        border-top: 1px solid #e3e7ee;
+      }
+      @media (max-width: 500px) {
+        .chat-container {
+          width: 100vw;
+          min-height: 100vh;
+          border-radius: 0;
+        }
+        .chat-header {
+          font-size: 1.2rem;
+          padding: 18px 0 10px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chat-container">
+      <div class="chat-header">
+      <span style="display:inline-block; width:48px; height:48px; vertical-align:middle; background: url('https://netpulse-services.pathcom.com/wp-content/themes/netpulse/images/pathcom-logo.png') no-repeat center/contain; margin-right:10px;"></span>
+        Chat with our Bot
+      </div>
+      <div id="webchat" role="main"></div>
+      <div class="chat-footer">
+        <i class="fa-solid fa-shield-halved"></i> Your conversation is private and secure.
+      </div>
+    </div>
+    <script>
+      const directLine = window.WebChat.createDirectLine({
+        token: 'vZYGCepDatph50zzgbA6DwhBajVcM5eERhE7ipMMg8kfICerl16XJQQJ99BFAC77bzfAArohAAABAZBSY6eO.8a3iFiFRKWT3brc6nPSViMgw7epacvzRM4SdJ6nkwSUEw9SRkhY8JQQJ99BFAC77bzfAArohAAABAZBSJGCe'
+      });
+
+      window.WebChat.renderWebChat({
+        directLine: directLine,
+        styleOptions: {
+          botAvatarInitials: '🤖',
+          userAvatarInitials: '🧑',
+          botAvatarBackgroundColor: '#4f8cff',
+          userAvatarBackgroundColor: '#38e8ff',
+          bubbleBackground: '#e3f0fc',
+          bubbleFromUserBackground: '#d1ffe7',
+          bubbleBorderRadius: 16,
+          bubbleFromUserBorderRadius: 16,
+          bubbleTextColor: '#222',
+          bubbleFromUserTextColor: '#222',
+          backgroundColor: 'transparent',
+          hideUploadButton: false,
+          sendBoxBackground: '#f7fafd',
+          sendBoxButtonColor: '#4f8cff',
+          sendBoxTextColor: '#222',
+          sendBoxBorderTop: '1px solid #e3e7ee',
+          suggestedActionBackground: '#4f8cff',
+          suggestedActionTextColor: '#fff',
+          suggestedActionBorder: 'none',
+          suggestedActionBorderRadius: 16,
+          suggestedActionLayout: 'stacked'
+          
+        }
+      }, document.getElementById('webchat'));
+    </script>
+  </body>
+</html>
