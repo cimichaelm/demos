@@ -1,0 +1,9 @@
+# default behavior
+* text=auto
+
+# shell scripts must have LF as line ending to run properly
+*.sh text eol=lf
+
+# binary files
+*.png binary
+*.jpg binary
